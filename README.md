@@ -11,3 +11,5 @@ Anyway, this was a lot of work to maintain manually, so I volunteered to create 
 * Written in Visual Basic
 * Uses SQLite database, requires some SQLite extension for VB
 * Contains some nice, reusable controls in the Shared folder.
+
+*Project started 10th Jan 2011 (probably)*

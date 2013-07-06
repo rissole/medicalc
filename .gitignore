@@ -1,0 +1,6 @@
+*.bat
+bin
+My Project
+obj
+*.zip
+*.suo

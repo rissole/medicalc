@@ -1,0 +1,77 @@
+-For the Armor,
+
+Say the Piece of armor you're wearing is Plate, and you have 0 Skill with it. The piece of armor you're wearing has 10 Defense. 
+The Defense is simply lowered down to 5 because of the penalties. (If the number for Defense/Damage isn't a whole number it's always rounded down,
+ not up, even if it were 6.999, it would be 6.) So if you had 1 Skill in Plate, the Defense would be 7. Only defense is lowered.
+
+As for the Bonuses, they are a little on the random side depending on the item/spell, but almost all of the time it's along the lines of a 
+10%-20%-25% Damage/Defense Bonus or Mana Cost Reduction. For 3-4-5.
+
+Also, despite the "Also make sure you take your Race's Skill bonuses into account when you fill these out, if your Race has +1 Unarmed Combat, 
+and you put 5 points in Unarmed combat, Unarmed combat will not be raised to 6, it will still be at 5. Your race's bonus will just 
+become unused." Part, It is possible to get to 6 with skills by the way, you just can't start out like that or reach it with racial bonuses.
+ That skill level is reachable through training (Although it still isn't easy to get.) In that case it would be about 40% Damage/Defense/Mana.
+
+ -spell: name, skill, base damage range, bHealing, base mana cost, custom effect
+
+ -stat/damage RANGES (for spells and OnUse effects)? maybe even formula based?
+
+ -formula bars... basically text boxes, maybe with different BG colour to make em stand out.
+  | -> signifies range
+  STR, AGI, INT, WIL, END -> player stats
+  LVL -> level
+  (MAX_){ENERGY, HP, MANA}, (MIN_){MELEE, RANGED}, MAGIC, DEF -> ratings
+  SKILL:skillname; -> player skill, eg SKILL:Unarmed Combat; would evaluate to the player's damage+ with unarmed combat skill
+  ??t prefix - the target's value. Eg: tLVL -> target's level, tINT -> target intellect??
+
+  -skills: +Damage with skills, not +skills
+  -The difference between Skills and +Damage with Skill is strictly internal. It is only ever seen during battle and on item/spell descs.
+
+  BATTLES
+
+  After pressing 'battles' on main, new window "Battles" appears.
+
+  Battles window contains 2 buttons, 'load battle' or 'new battle', above load battle is a drop down list of saved battles,
+  above new battle is a textbox for battle name.
+
+  Then a new window, 'Battle: <Name>' appears. Two main columns appear on the screen: Team A, Team B. Each column will have "Add Member" on it.
+
+  Upon clicking add member, a context menu will appear for either "player" or "NPC".
+
+  If player, then they will be prompted to choose a player from a drop down list, then that player is added to the respective column, given
+  an ID based on their position in said column, and a new PlayerObject is created, which will basically load all battle vars in an easy to access
+  way based on the player proto. This includes iterating over all items and extracting stats, adjusting armor accounting for skills, etc.
+
+  Else if NPC, a basic stats window will appear, requiring input of Name, Level and Cur/Max Health.
+
+  Each Member, when in the column, will have a small 'Attack' button.
+
+  When Attack button is pressed, If NPC, user will be prompted to enter a: short description of the attack (past tense), a damage range
+  (aka a formula input box where only | is allowed), and a target from other team (or random, or none).
+
+  Else If it was a player, a new window with a list of options is generated. Each one has a radio button. Options should include:
+  Melee attack, [Ranged Attack,] Block, Any spells, Any usable items, Leave combat, or Pass.
+
+  Block: -50% damage reduction per consecutive block. (100-50-0)
+
+  Leave combat is dying with different event text.
+
+  Once an attack option is set, a little tick should appear or something, to indicate done. Maybe red border. <Save here>
+
+  Additionally, there is a 'Custom Event' button, which allows some arbitrary text to be written AFTER all automated content. All data of
+  members can be manually edited, too. If an item/spell is used on an NPC who can't be affected by its effects (eg mana lowering item)
+  it won't do anything internally but will still say it did.
+
+  Once every attack is entered, the "Next Turn & Generate Post" button will be active. This will pop up a window with a forum formatted log
+  of what happened during the turn. This will be kept in the turn log. <Save here>
+
+  All Members will be updated with what happened during said turn. Battle ends when one team is dead.
+
+  Next: next turn and generate post
+
+  Players always go first. Player with highest agility goes first. NPCs go in random order.
+
+  Effects:
+  need objects that track what they do to player stats
+  need to load from DB too
+  apply/remove methods to affect the player appropriately
